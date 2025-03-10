@@ -16,6 +16,6 @@ public class SecurityConstants {
 
     private SecurityConstants() {
         throw new UnsupportedOperationException(
-                "This is a utility class and cannot be instantiated.");
+                "Esta é uma classe utilitária e não pode ser instanciada.");
     }
 }

@@ -31,8 +31,8 @@ spring:
       ddl-auto: none
 
   liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.yml
     enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yml
 
 api:
   path: /api
