@@ -13,8 +13,8 @@ spring:
       client:
         registration:
           google:
-            client-id: 120667016166-s6vre300jo8r9lgjmv1aaegn9jpb8e2r.apps.googleusercontent.com
-            client-secret: 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
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
             redirect-uri: http://localhost:8098/login/oauth2/code/google
             scope: openid, profile, email
 
@@ -23,11 +23,6 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
-    hikari:
-      maximum-pool-size: 10
-      connection-timeout: 30000
-      idle-timeout: 600000
-      leak-detection-threshold: 15000
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -41,3 +36,15 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yml
     enabled: true
+
+api:
+  path: /api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

@@ -1,5 +1,5 @@
-# Usa a imagem oficial do OpenJDK 21
-FROM eclipse-temurin:21-jdk
+# Usa a imagem slim do OpenJDK 21
+FROM openjdk:21-jdk-slim
 
 # Define o diretório de trabalho no contêiner
 WORKDIR /app
@@ -11,4 +11,4 @@ COPY target/eucomida-*.jar app.jar
 EXPOSE 8098
 
 # Comando para rodar a aplicação dentro do contêiner
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
