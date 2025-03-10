@@ -1,0 +1,43 @@
+server:
+  port: 8098
+
+spring:
+  application:
+    name: eucomida
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+      client:
+        registration:
+          google:
+            client-id: 120667016166-s6vre300jo8r9lgjmv1aaegn9jpb8e2r.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://localhost:8098/login/oauth2/code/google
+            scope: openid, profile, email
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      leak-detection-threshold: 15000
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.time_zone: UTC
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yml
+    enabled: true

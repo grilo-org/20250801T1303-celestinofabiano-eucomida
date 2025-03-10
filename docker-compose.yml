@@ -1,0 +1,48 @@
+services:
+  eucomida:
+    build: .
+    container_name: eucomida
+    ports:
+      - "8098:8098"
+    environment:
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID: "120667016166-s6vre300jo8r9lgjmv1aaegn9jpb8e2r.apps.googleusercontent.com"
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET: "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"
+      SERVER_PORT: "8098"
+      SPRING_APPLICATION_NAME: "eucomida"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/eucomida"
+      SPRING_DATASOURCE_USERNAME: "admin"
+      SPRING_DATASOURCE_PASSWORD: "admin"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+      SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.PostgreSQLDialect"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  db:
+    image: "postgres:16"
+    container_name: postgres-eucomida
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: eucomida
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
+    driver: bridge
