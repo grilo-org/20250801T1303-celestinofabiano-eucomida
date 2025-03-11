@@ -5,6 +5,7 @@ import com.geosapiens.eucomida.dto.UserResponseDTO;
 import com.geosapiens.eucomida.service.AuthenticationService;
 import com.geosapiens.eucomida.service.UserService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -23,26 +24,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Optional<String> getTokenFromAuthentication(Authentication authentication) {
-        if (authentication instanceof JwtAuthenticationToken jwtAuth) {
-            return Optional.of(jwtAuth.getToken().getTokenValue());
-        }
-        return Optional.empty();
+        return switch (authentication) {
+            case JwtAuthenticationToken jwtAuth -> Optional.of(jwtAuth.getToken().getTokenValue());
+            case OAuth2AuthenticationToken oauth when oauth.getPrincipal() instanceof OidcUser oidcUser ->
+                    Optional.of(oidcUser.getIdToken().getTokenValue());
+            default -> Optional.empty();
+        };
     }
 
     @Override
     public Optional<UserResponseDTO> getAuthenticatedUser(Authentication authentication) {
         return Optional.ofNullable(authentication)
                 .map(Authentication::getPrincipal)
-                .flatMap(this::processAuthentication);
+                .flatMap(this::processAuthenticatedUser);
     }
 
-    private Optional<UserResponseDTO> processAuthentication(Object principal) {
-        if (principal instanceof OidcUser oidcUser) {
-            return createOrGetUser(oidcUser.getFullName(), oidcUser.getEmail());
-        } else if (principal instanceof Jwt jwt) {
-            return createOrGetUser(jwt.getClaimAsString("name"), jwt.getClaimAsString("email"));
-        }
-        return Optional.empty();
+    private Optional<UserResponseDTO> processAuthenticatedUser(Object principal) {
+        return switch (principal) {
+            case OidcUser oidcUser -> createOrGetUser(oidcUser.getFullName(), oidcUser.getEmail());
+            case Jwt jwt ->
+                    createOrGetUser(jwt.getClaimAsString("name"), jwt.getClaimAsString("email"));
+            default -> Optional.empty();
+        };
     }
 
     private Optional<UserResponseDTO> createOrGetUser(String name, String email) {

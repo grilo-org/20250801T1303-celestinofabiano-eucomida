@@ -4,6 +4,9 @@ import static org.springframework.security.oauth2.core.OAuth2AccessToken.TokenTy
 
 import com.geosapiens.eucomida.dto.UserResponseDTO;
 import com.geosapiens.eucomida.service.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,6 +24,13 @@ public class UserController {
         this.authenticationService = authenticationService;
     }
 
+    @Operation(summary = "Obter usuário autenticado",
+            description = "Retorna os dados do usuário autenticado com base no token JWT ou OAuth2.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário autenticado retornado com sucesso"),
+            @ApiResponse(responseCode = "401", description = "Não autorizado - Token inválido ou expirado"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
     @GetMapping("/me")
     public ResponseEntity<UserResponseDTO> getAuthenticatedUser(Authentication authentication) {
         return authenticationService.getAuthenticatedUser(authentication)
