@@ -30,7 +30,7 @@ public class Courier extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false, unique = true, foreignKey = @ForeignKey(name = "fk_courier_user"))
     private User user;
 
-    @NotNull(message = "O tipo de veículo é obrigatório")
+    @NotNull(message = ValidationConstants.COURIER_VEHICLE_TYPE_REQUIRED)
     @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_type", nullable = false, length = 30)
     private VehicleType vehicleType;

@@ -1,13 +1,31 @@
 package com.geosapiens.eucomida.dto;
 
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserResponseDtoTest {
 
     @Test
-    void shouldUserResponseDto() {
-        // Implementação do teste aqui
-        assertThat(true).isTrue();
+    void shouldCreateUserResponseDtoUsingBuilder() {
+        UUID id = UUID.randomUUID();
+        String name = "John Doe";
+        String email = "johndoe@example.com";
+        LocalDateTime createdAt = LocalDateTime.now();
+
+        UserResponseDto dto = UserResponseDto.builder()
+                .id(id)
+                .name(name)
+                .email(email)
+                .createdAt(createdAt)
+                .build();
+
+        assertThat(dto.id()).isEqualTo(id);
+        assertThat(dto.name()).isEqualTo(name);
+        assertThat(dto.email()).isEqualTo(email);
+        assertThat(dto.createdAt()).isEqualTo(createdAt);
     }
 }

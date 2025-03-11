@@ -1,7 +1,7 @@
 package com.geosapiens.eucomida.entity.enums;
 
 public enum VehicleType {
-    BIKE,
+    BICYCLE,
     CAR,
-    MOTO
+    MOTORCYCLE
 }

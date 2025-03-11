@@ -4,6 +4,7 @@ import static com.geosapiens.eucomida.constant.ErrorMessages.UTILITY_CLASS;
 
 public class ValidationConstants {
 
+    public static final String COURIER_VEHICLE_TYPE_REQUIRED = "O tipo de veículo é obrigatório";
     public static final String COURIER_PLATE_NUMBER_REGEX = "^[A-Z]{3}\\d[A-Z]\\d{2}$";
     public static final String COURIER_PLATE_NUMBER_MESSAGE = "A placa deve estar no formato correto (ex: AAA1B23)";
 
