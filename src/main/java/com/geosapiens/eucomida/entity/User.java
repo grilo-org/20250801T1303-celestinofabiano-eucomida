@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "public", name = "users")
+@Table(name = "users")
 public class User extends BaseEntity {
 
     @NotBlank(message = ValidationConstants.USER_NAME_REQUIRED)

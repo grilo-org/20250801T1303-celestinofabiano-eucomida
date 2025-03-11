@@ -22,7 +22,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "public", name = "couriers")
+@Table(name = "couriers")
 public class Courier extends BaseEntity {
 
     @NotNull(message = "O entregador deve estar associado a um usuário")

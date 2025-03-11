@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "public", name = "orders")
+@Table(name = "orders")
 public class Order extends BaseEntity {
 
     @NotNull(message = ValidationConstants.ORDER_USER_REQUIRED)
