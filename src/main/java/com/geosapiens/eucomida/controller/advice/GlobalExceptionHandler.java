@@ -5,7 +5,7 @@ import com.geosapiens.eucomida.dto.ErrorResponseDto;
 import com.geosapiens.eucomida.exception.AuthenticatedUserNotFoundException;
 import com.geosapiens.eucomida.exception.CourierNotFoundException;
 import com.geosapiens.eucomida.exception.OrderNotFoundException;
-import com.geosapiens.eucomida.exception.UserNotFoundInDatabaseException;
+import com.geosapiens.eucomida.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
@@ -25,9 +25,9 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(ex, HttpStatus.UNAUTHORIZED, request);
     }
 
-    @ExceptionHandler(UserNotFoundInDatabaseException.class)
+    @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleUserNotFoundException(
-            UserNotFoundInDatabaseException ex, HttpServletRequest request) {
+            UserNotFoundException ex, HttpServletRequest request) {
         return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
     }
 

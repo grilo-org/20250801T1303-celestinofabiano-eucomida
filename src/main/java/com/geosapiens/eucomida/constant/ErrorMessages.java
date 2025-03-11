@@ -4,7 +4,7 @@ public class ErrorMessages {
 
     public static final String UTILITY_CLASS = "Esta é uma classe utilitária e não pode ser instanciada";
     public static final String AUTHENTICATED_USER_NOT_FOUND = "Usuário autenticado não encontrado";
-    public static final String USER_NOT_FOUND_IN_DATABASE = "Usuário não encontrado no banco de dados";
+    public static final String USER_NOT_FOUND = "Usuário não encontrado no banco de dados";
     public static final String ORDER_NOT_FOUND = "Pedido não encontrado";
     public static final String COURIER_NOT_FOUND = "Entregador não encontrado";
     public static final String RESOURCE_NOT_FOUND_ERROR = "Endpoint não encontrado no servidor";

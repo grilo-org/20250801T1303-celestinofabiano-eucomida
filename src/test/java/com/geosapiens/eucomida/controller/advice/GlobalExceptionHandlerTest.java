@@ -57,12 +57,12 @@ class GlobalExceptionHandlerTest {
     void shouldHandleUserNotFoundException() {
         when(request.getRequestURI()).thenReturn(TEST_PATH);
         ResponseEntity<ErrorResponseDto> response = globalExceptionHandler.handleUserNotFoundException(
-                new UserNotFoundInDatabaseException(), request);
+                new UserNotFoundException(), request);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getMessage()).isEqualTo(
-                ErrorMessages.USER_NOT_FOUND_IN_DATABASE);
+                ErrorMessages.USER_NOT_FOUND);
     }
 
     @Test

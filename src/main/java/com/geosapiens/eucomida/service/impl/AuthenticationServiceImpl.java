@@ -7,7 +7,7 @@ import com.geosapiens.eucomida.dto.UserRequestDto;
 import com.geosapiens.eucomida.dto.UserResponseDto;
 import com.geosapiens.eucomida.entity.User;
 import com.geosapiens.eucomida.exception.AuthenticatedUserNotFoundException;
-import com.geosapiens.eucomida.exception.UserNotFoundInDatabaseException;
+import com.geosapiens.eucomida.exception.UserNotFoundException;
 import com.geosapiens.eucomida.service.AuthenticationService;
 import com.geosapiens.eucomida.service.UserService;
 import com.geosapiens.eucomida.util.AuthenticationUtils;
@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(AuthenticatedUserNotFoundException::new);
 
         return userService.findByEmail(email)
-                .orElseThrow(UserNotFoundInDatabaseException::new);
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override

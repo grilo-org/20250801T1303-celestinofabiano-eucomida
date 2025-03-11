@@ -30,7 +30,7 @@ class ErrorMessagesTest {
 
     @Test
     void shouldContainCorrectErrorMessageForUserNotFoundInDatabase() {
-        assertThat(ErrorMessages.USER_NOT_FOUND_IN_DATABASE)
+        assertThat(ErrorMessages.USER_NOT_FOUND)
                 .isEqualTo("Usuário não encontrado no banco de dados");
     }
 
