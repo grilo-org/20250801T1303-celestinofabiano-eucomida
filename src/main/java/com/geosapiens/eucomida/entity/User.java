@@ -1,41 +1,33 @@
 package com.geosapiens.eucomida.entity;
 
+import com.geosapiens.eucomida.constant.ValidationConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(schema = "public", name = "users")
-@EqualsAndHashCode(of = "id")
-public class User {
+public class User extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
-    @NotBlank(message = "O nome não pode estar em branco")
+    @NotBlank(message = ValidationConstants.USER_NAME_REQUIRED)
     @Column(nullable = false)
     private String name;
 
-    @NotBlank(message = "O e-mail não pode estar em branco")
-    @Email(message = "O e-mail deve ser válido")
+    @NotBlank(message = ValidationConstants.USER_EMAIL_REQUIRED)
+    @Email(message = ValidationConstants.USER_EMAIL_INVALID)
     @Column(nullable = false, unique = true)
     private String email;
 

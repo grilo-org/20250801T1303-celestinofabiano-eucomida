@@ -17,5 +17,5 @@ INSERT INTO users (id, name, email, created_at) VALUES
 -- Inserção de entregadores padrão
 INSERT INTO couriers (id, user_id, vehicle_type, plate_number, created_at) VALUES
     ('6e4e225e-7f64-4b96-9cd5-446655440001', '550e8400-e29b-41d4-a716-446655440001', 'BIKE', NULL, NOW()),
-    ('6e4e225e-7f64-4b96-9cd5-446655440002', '550e8400-e29b-41d4-a716-446655440002', 'CAR', 'ABC-1234', NOW()),
-    ('6e4e225e-7f64-4b96-9cd5-446655440003', '550e8400-e29b-41d4-a716-446655440003', 'MOTO', 'XYZ-5678', NOW());
+    ('6e4e225e-7f64-4b96-9cd5-446655440002', '550e8400-e29b-41d4-a716-446655440002', 'CAR', 'ABC1234', NOW()),
+    ('6e4e225e-7f64-4b96-9cd5-446655440003', '550e8400-e29b-41d4-a716-446655440003', 'MOTO', 'XYZ5678', NOW());

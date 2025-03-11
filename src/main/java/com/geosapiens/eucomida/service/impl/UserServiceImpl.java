@@ -1,58 +1,56 @@
 package com.geosapiens.eucomida.service.impl;
 
-import com.geosapiens.eucomida.dto.UserRequestDTO;
-import com.geosapiens.eucomida.dto.UserResponseDTO;
+import com.geosapiens.eucomida.dto.UserRequestDto;
+import com.geosapiens.eucomida.dto.UserResponseDto;
 import com.geosapiens.eucomida.entity.User;
+import com.geosapiens.eucomida.mapper.UserMapper;
 import com.geosapiens.eucomida.repository.UserRepository;
 import com.geosapiens.eucomida.service.UserService;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
-    public Optional<UserResponseDTO> findById(UUID userId) {
-        return userRepository.findById(userId).map(this::convertToDTO);
+    @Transactional
+    public UserResponseDto create(UserRequestDto userRequest) {
+        User savedUser = userRepository.save(userMapper.toEntity(userRequest));
+        return userMapper.toDTO(savedUser);
     }
 
     @Override
-    public Optional<UserResponseDTO> findByEmail(String email) {
-        return userRepository.findByEmail(email).map(this::convertToDTO);
+    @Transactional
+    public UserResponseDto getOrCreate(UserRequestDto userRequest) {
+        return findDtoByEmail(userRequest.email()).orElseGet(() -> create(userRequest));
     }
 
     @Override
-    public UserResponseDTO getOrCreateUser(UserRequestDTO userRequest) {
-        return userRepository.findByEmail(userRequest.email())
-                .map(this::convertToDTO)
-                .orElseGet(() -> registerNewUser(userRequest));
+    @Transactional(readOnly = true)
+    public Optional<UserResponseDto> findDtoById(UUID id) {
+        return userRepository.findById(id).map(userMapper::toDTO);
     }
 
     @Override
-    public UserResponseDTO registerNewUser(UserRequestDTO userRequest) {
-        User newUser = new User();
-        newUser.setName(userRequest.name());
-        newUser.setEmail(userRequest.email());
-
-        User savedUser = userRepository.save(newUser);
-        return convertToDTO(savedUser);
+    @Transactional(readOnly = true)
+    public Optional<UserResponseDto> findDtoByEmail(String email) {
+        return findByEmail(email).map(userMapper::toDTO);
     }
 
-    private UserResponseDTO convertToDTO(User user) {
-        return UserResponseDTO.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
-                .build();
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
+
 }

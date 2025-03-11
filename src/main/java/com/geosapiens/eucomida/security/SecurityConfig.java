@@ -1,5 +1,6 @@
 package com.geosapiens.eucomida.security;
 
+import com.geosapiens.eucomida.constant.SecurityConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

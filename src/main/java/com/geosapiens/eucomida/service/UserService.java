@@ -1,19 +1,21 @@
 package com.geosapiens.eucomida.service;
 
-import com.geosapiens.eucomida.dto.UserRequestDTO;
-import com.geosapiens.eucomida.dto.UserResponseDTO;
+import com.geosapiens.eucomida.dto.UserRequestDto;
+import com.geosapiens.eucomida.dto.UserResponseDto;
+import com.geosapiens.eucomida.entity.User;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserService {
 
-    Optional<UserResponseDTO> findById(UUID userId);
+    UserResponseDto create(UserRequestDto userRequest);
 
-    Optional<UserResponseDTO> findByEmail(String email);
+    UserResponseDto getOrCreate(UserRequestDto userRequest);
 
-    UserResponseDTO getOrCreateUser(UserRequestDTO userRequest);
+    Optional<UserResponseDto> findDtoById(UUID id);
 
-    UserResponseDTO registerNewUser(UserRequestDTO userRequest);
+    Optional<UserResponseDto> findDtoByEmail(String email);
+
+    Optional<User> findByEmail(String email);
 
 }

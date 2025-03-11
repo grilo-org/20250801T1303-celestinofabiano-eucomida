@@ -1,4 +1,6 @@
-package com.geosapiens.eucomida.security;
+package com.geosapiens.eucomida.constant;
+
+import static com.geosapiens.eucomida.constant.ErrorMessages.UTILITY_CLASS;
 
 public class SecurityConstants {
 
@@ -15,7 +17,6 @@ public class SecurityConstants {
     public static final String USER_ME_PATH = "/v1/user/me";
 
     private SecurityConstants() {
-        throw new UnsupportedOperationException(
-                "Esta é uma classe utilitária e não pode ser instanciada.");
+        throw new IllegalStateException(UTILITY_CLASS);
     }
 }

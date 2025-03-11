@@ -1,14 +1,17 @@
 package com.geosapiens.eucomida.service;
 
-import com.geosapiens.eucomida.dto.UserRequestDTO;
-import com.geosapiens.eucomida.dto.UserResponseDTO;
+import com.geosapiens.eucomida.dto.UserResponseDto;
+import com.geosapiens.eucomida.entity.User;
 import java.util.Optional;
-import org.springframework.security.core.Authentication;
 
 public interface AuthenticationService {
 
-    Optional<String> getTokenFromAuthentication(Authentication authentication);
+    Optional<UserResponseDto> findCurrentUserDto();
 
-    Optional<UserResponseDTO> getAuthenticatedUser(Authentication authentication);
+    User findCurrentUser();
+
+    Optional<String> getCurrentUserEmail();
+
+    Optional<String> getCurrentToken();
 
 }

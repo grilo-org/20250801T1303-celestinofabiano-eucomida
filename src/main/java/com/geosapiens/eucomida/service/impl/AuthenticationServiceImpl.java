@@ -1,17 +1,19 @@
 package com.geosapiens.eucomida.service.impl;
 
-import com.geosapiens.eucomida.dto.UserRequestDTO;
-import com.geosapiens.eucomida.dto.UserResponseDTO;
+import static com.geosapiens.eucomida.util.AuthenticationUtils.CLAIM_EMAIL;
+import static com.geosapiens.eucomida.util.AuthenticationUtils.CLAIM_NAME;
+
+import com.geosapiens.eucomida.dto.UserRequestDto;
+import com.geosapiens.eucomida.dto.UserResponseDto;
+import com.geosapiens.eucomida.entity.User;
+import com.geosapiens.eucomida.exception.AuthenticatedUserNotFoundException;
+import com.geosapiens.eucomida.exception.UserNotFoundInDatabaseException;
 import com.geosapiens.eucomida.service.AuthenticationService;
 import com.geosapiens.eucomida.service.UserService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.stereotype.Service;
-
+import com.geosapiens.eucomida.util.AuthenticationUtils;
 import java.util.Optional;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -23,41 +25,47 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public Optional<String> getTokenFromAuthentication(Authentication authentication) {
-        return switch (authentication) {
-            case JwtAuthenticationToken jwtAuth -> Optional.of(jwtAuth.getToken().getTokenValue());
-            case OAuth2AuthenticationToken oauth when oauth.getPrincipal() instanceof OidcUser oidcUser ->
-                    Optional.of(oidcUser.getIdToken().getTokenValue());
-            default -> Optional.empty();
-        };
-    }
-
-    @Override
-    public Optional<UserResponseDTO> getAuthenticatedUser(Authentication authentication) {
-        return Optional.ofNullable(authentication)
-                .map(Authentication::getPrincipal)
+    public Optional<UserResponseDto> findCurrentUserDto() {
+        return AuthenticationUtils.getAuthentication()
                 .flatMap(this::processAuthenticatedUser);
     }
 
-    private Optional<UserResponseDTO> processAuthenticatedUser(Object principal) {
-        return switch (principal) {
-            case OidcUser oidcUser -> createOrGetUser(oidcUser.getFullName(), oidcUser.getEmail());
-            case Jwt jwt ->
-                    createOrGetUser(jwt.getClaimAsString("name"), jwt.getClaimAsString("email"));
-            default -> Optional.empty();
-        };
+    @Override
+    public User findCurrentUser() {
+        String email = getCurrentUserEmail()
+                .orElseThrow(AuthenticatedUserNotFoundException::new);
+
+        return userService.findByEmail(email)
+                .orElseThrow(UserNotFoundInDatabaseException::new);
     }
 
-    private Optional<UserResponseDTO> createOrGetUser(String name, String email) {
+    @Override
+    public Optional<String> getCurrentUserEmail() {
+        return AuthenticationUtils.getClaim(CLAIM_EMAIL);
+    }
+
+    @Override
+    public Optional<String> getCurrentToken() {
+        return AuthenticationUtils.getToken();
+    }
+
+    private Optional<UserResponseDto> processAuthenticatedUser(Authentication authentication) {
+        String name = AuthenticationUtils.getClaim(CLAIM_NAME).orElse(null);
+        String email = AuthenticationUtils.getClaim(CLAIM_EMAIL).orElse(null);
+        return createOrGetUser(name, email);
+    }
+
+    private Optional<UserResponseDto> createOrGetUser(String name, String email) {
         if (email == null || email.isBlank()) {
             return Optional.empty();
         }
 
-        return Optional.of(userService.getOrCreateUser(
-                UserRequestDTO.builder()
+        return Optional.of(userService.getOrCreate(
+                UserRequestDto.builder()
                         .name(name != null ? name : email)
                         .email(email)
                         .build()
         ));
     }
+
 }
