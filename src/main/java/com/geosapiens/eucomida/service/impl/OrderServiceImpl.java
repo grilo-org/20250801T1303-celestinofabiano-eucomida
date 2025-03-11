@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         User user = authenticationService.findCurrentUser();
         Courier courier = courierService.findIfIdExists(request.courierId());
         Order order = orderMapper.toEntity(request, user, courier);
-        return orderMapper.toDTO(orderRepository.save(order));
+        return orderMapper.toDTO(orderRepository.saveAndFlush(order));
     }
 
     @Transactional
@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
         Order existingOrder = findByIdForCurrentUser(id);
         Courier courier = courierService.findIfIdExists(request.courierId());
         existingOrder.updateFromRequest(request, courier);
-        return orderMapper.toDTO(orderRepository.save(existingOrder));
+        return orderMapper.toDTO(orderRepository.saveAndFlush(existingOrder));
     }
 
     @Override

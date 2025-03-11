@@ -1,7 +1,6 @@
 package com.geosapiens.eucomida.controller.advice;
 
 import com.geosapiens.eucomida.constant.ErrorMessages;
-import com.geosapiens.eucomida.constant.ValidationConstants;
 import com.geosapiens.eucomida.dto.ErrorResponseDto;
 import com.geosapiens.eucomida.exception.AuthenticatedUserNotFoundException;
 import com.geosapiens.eucomida.exception.CourierNotFoundException;
