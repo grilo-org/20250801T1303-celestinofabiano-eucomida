@@ -1,5 +1,7 @@
 package com.geosapiens.eucomida.constant;
 
+import static com.geosapiens.eucomida.constant.ErrorMessages.UTILITY_CLASS;
+
 public class SwaggerConstants {
 
     public static final String UNAUTHORIZED_401 = "Não autorizado - Token inválido ou expirado";
@@ -26,4 +28,8 @@ public class SwaggerConstants {
     public static final String FIND_ORDERS_BY_STATUS_DESCRIPTION = "Retorna uma lista de pedidos com um status específico.";
     public static final String FIND_ORDERS_BY_STATUS_200 = "Pedidos encontrados com sucesso";
     public static final String FIND_ORDERS_BY_STATUS_400 = "Status inválido";
+
+    private SwaggerConstants() {
+        throw new IllegalStateException(UTILITY_CLASS);
+    }
 }
