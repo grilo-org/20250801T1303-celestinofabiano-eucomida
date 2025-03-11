@@ -30,9 +30,10 @@ spring:
     hibernate:
       ddl-auto: none
 
-  liquibase:
+  flyway:
     enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.yml
+    locations: classpath:db/migration
+    validate-on-migrate: true
 
 api:
   path: /api

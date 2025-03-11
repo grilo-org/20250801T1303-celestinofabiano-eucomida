@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "public", name = "deliveries")
+@Table(schema = "public", name = "couriers")
 @EqualsAndHashCode(of = "id")
 public class Courier {
 

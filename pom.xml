@@ -89,13 +89,21 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Liquibase -->
+		<!-- Flyway para controle de versionamento do BD -->
 		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>LATEST</version>
 		</dependency>
 
-		<!-- Lombok -->
+		<!-- Flyway plugin para features do PostgreSQL -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+			<version>LATEST</version>
+		</dependency>
+
+		<!-- Lombok para redução de códigos boilerplate na aplicação -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
