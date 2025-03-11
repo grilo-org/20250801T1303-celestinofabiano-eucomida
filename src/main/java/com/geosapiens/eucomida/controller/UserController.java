@@ -1,9 +1,12 @@
 package com.geosapiens.eucomida.controller;
 
-import com.geosapiens.eucomida.dto.AuthenticatedUserDTO;
+import static org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType.BEARER;
+
+import com.geosapiens.eucomida.dto.UserResponseDTO;
+import com.geosapiens.eucomida.service.AuthenticationService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,28 +15,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("${api.path}/v1/user")
 public class UserController {
 
-    @GetMapping("/me")
-    public AuthenticatedUserDTO getAuthenticatedUser(Authentication authentication) {
-        if (authentication == null || authentication.getPrincipal() == null) {
-            throw new RuntimeException("Usuário não autenticado!");
-        }
+    private final AuthenticationService authenticationService;
 
-        return switch (authentication.getPrincipal()) {
-            case OidcUser oidcUser -> new AuthenticatedUserDTO(
-                    "oauth2_login",
-                    oidcUser.getSubject(),
-                    oidcUser.getEmail(),
-                    oidcUser.getFullName(),
-                    oidcUser.getClaims()
-            );
-            case Jwt jwt -> new AuthenticatedUserDTO(
-                    "jwt_token",
-                    jwt.getSubject(),
-                    jwt.getClaimAsString("email"),
-                    jwt.getClaimAsString("name"),
-                    jwt.getClaims()
-            );
-            default -> throw new RuntimeException("Tipo de autenticação desconhecido!");
-        };
+    public UserController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getAuthenticatedUser(Authentication authentication) {
+        return authenticationService.getAuthenticatedUser(authentication)
+                .map(user -> ResponseEntity.ok()
+                        .headers(createAuthorizationHeader(authentication))
+                        .body(user))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    private HttpHeaders createAuthorizationHeader(Authentication authentication) {
+        HttpHeaders headers = new HttpHeaders();
+        authenticationService.getTokenFromAuthentication(authentication)
+                .ifPresent(token -> headers.set(HttpHeaders.AUTHORIZATION, token));
+        return headers;
+    }
+
 }
