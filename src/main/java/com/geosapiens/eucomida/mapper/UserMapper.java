@@ -4,11 +4,12 @@ import com.geosapiens.eucomida.dto.UserRequestDto;
 import com.geosapiens.eucomida.dto.UserResponseDto;
 import com.geosapiens.eucomida.entity.User;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
 public class UserMapper {
 
-    public User toEntity(UserRequestDto userRequest) {
+    public @Validated User toEntity(UserRequestDto userRequest) {
         User user = new User();
         user.setName(userRequest.name());
         user.setEmail(userRequest.email());

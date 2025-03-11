@@ -6,6 +6,7 @@ import com.geosapiens.eucomida.entity.Courier;
 import com.geosapiens.eucomida.entity.Order;
 import com.geosapiens.eucomida.entity.User;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
 public class OrderMapper {
@@ -19,11 +20,7 @@ public class OrderMapper {
         this.courierMapper = courierMapper;
     }
 
-    public Order toEntity(OrderRequestDto request, User user) {
-        return toEntity(request, user, null);
-    }
-
-    public Order toEntity(OrderRequestDto request, User user, Courier courier) {
+    public @Validated Order toEntity(OrderRequestDto request, User user, Courier courier) {
         Order order = new Order();
         order.setUser(user);
         order.setCourier(courier);
