@@ -118,6 +118,37 @@ docker-compose up -d
 mvn test
 ```
 
+## 📌 Decisões Técnicas Tomadas
+
+### 1️⃣ Arquitetura e Design do Sistema
+- Arquitetura baseada em serviços desacoplados para permitir escalabilidade futura.
+- Modelo relacional com PostgreSQL, garantindo integridade dos dados e suporte a transações ACID.
+- Uso de Spring Boot para acelerar o desenvolvimento, manter padronização e facilitar integração com outras tecnologias.
+
+### 2️⃣ Escolha das Tecnologias
+- Java 21: Escolhido por sua estabilidade, suporte a recursos modernos e melhorias de desempenho.
+- Spring Boot 3.4.3: Framework principal pela sua robustez, modularidade e facilidade de configuração.
+- Spring Data JPA + Hibernate: Simplifica a persistência e abstrai interações com o banco de dados.
+- OAuth2 + JWT: Implementação de autenticação moderna e segura.
+- HikariCP: Para otimização de conexões ao banco, melhorando performance.
+- Flyway: Controle de versões do banco de dados para manter consistência entre ambientes.
+- OpenAPI (Swagger): Documentação interativa da API.
+- JUnit 5, AssertJ e Mockito: Stack de testes robusta, garantindo qualidade do código.
+
+### 3️⃣ Autenticação e Segurança
+- OAuth2 com Google: Delegação de autenticação para um provedor externo confiável.
+- JWT para autorização: Sessões autenticadas e seguras, reduzindo carga no banco.
+- Spring Security: Controle de acesso granular e proteção contra ataques comuns (XSS, CSRF, etc.).
+- Variáveis sensíveis protegidas: Uso de variáveis de ambiente para segredos e chaves.
+
+### 4️⃣ Escalabilidade e Performance
+- Arquitetura escalável horizontalmente: Permite aumentar o número de instâncias sem impacto no sistema.
+- Gerenciamento eficiente de conexões: HikariCP otimiza o uso do banco, evitando gargalos.
+- Possível evolução para microserviços: O sistema foi estruturado para permitir modularização no futuro.
+
+### 5️⃣ Containerização e Facilidade de Deploy
+- Uso de Docker e Docker Compose: Facilita configuração e execução do ambiente, garantindo portabilidade.
+- Banco PostgreSQL rodando em container: Garantia de um ambiente controlado e padronizado.
 ---
 
 ## 📚 Próximos Passos
