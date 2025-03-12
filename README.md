@@ -129,5 +129,3 @@ mvn test
 
 ---
 
-Essa documentação reflete o estado atual do projeto. Caso algo precise ser ajustado, me avise! 🚀
-
