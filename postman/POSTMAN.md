@@ -41,11 +41,13 @@ A API **euComida** utiliza autenticação via **OAuth2 do Google**. Para realiza
 ### 2️⃣ **Aplicando o Token no Postman**
 1. Após a autenticação bem-sucedida, o Postman exibirá uma mensagem de sucesso.
 2. Clique no botão **"Use Token"** no canto superior da tela aberta.
-3. Role até a opção **"Use Token Type"** e altere de **"Access token"** para **"ID Token"**.![use_token_type.png](use_token_type.png)
+   - 🚨 *O tempo de expiração do token é de 1 hora*
+4. Role até a opção **"Use Token Type"** e altere de **"Access token"** para **"ID Token"**.
+   ![use_token_type](https://github.com/user-attachments/assets/f7eae41e-a06c-456c-89ad-e07df1ebb37e)
    
    - 🚨 *Essa alteração é necessária porque estamos utilizando o token para um contexto de chamadas de API!*
-4. Envie a requisição para o endpoint **`/user/me`**.
-5. Se a autenticação for bem-sucedida, o **Bearer Token** será automaticamente armazenado na variável de ambiente `token`.
+5. Envie a requisição para o endpoint **`/user/me`**.
+6. Se a autenticação for bem-sucedida, o **Bearer Token** será automaticamente armazenado na variável de ambiente `token`.
 
 Agora, todas as requisições que necessitam de autenticação poderão ser enviadas sem precisar configurar o token manualmente.
 
