@@ -45,7 +45,7 @@ A API **euComida** utiliza autenticação via **OAuth2 do Google**. Para realiza
 4. Role até a opção **"Use Token Type"** e altere de **"Access token"** para **"ID Token"**.
    ![use_token_type](https://github.com/user-attachments/assets/f7eae41e-a06c-456c-89ad-e07df1ebb37e)
    
-   - 🚨 *Essa alteração é necessária porque estamos utilizando o token para um contexto de chamadas de API!*
+   - 🚨 *Essa alteração é necessária porque estamos utilizando o token para um contexto de chamadas de API*
 5. Envie a requisição para o endpoint **`/user/me`**.
 6. Se a autenticação for bem-sucedida, o **Bearer Token** será automaticamente armazenado na variável de ambiente `token`.
 
@@ -95,9 +95,7 @@ A collection já possui scripts que armazenam dinamicamente informações úteis
 ## ❗ Dicas e Solução de Problemas
 
 - **Erro 401 Unauthorized**: Verifique se o token (`token`) está preenchido corretamente e tente refazer a autenticação.
-- **Erro 403 Forbidden**: Sua conta pode não ter permissão para acessar os endpoints. Confirme com o administrador.
+- **Erro 403 Forbidden**: Sua conta pode não ter permissão para acessar os endpoints.
 - **Erro de conexão**: Certifique-se de que `baseUri` está correto e que a API está online.
 
 ---
-
-Agora você está pronto para testar a API **euComida** no Postman! 🚀
