@@ -89,6 +89,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- PostgreSQL Socket para conexão com o BD na GCP-->
+		<dependency>
+			<groupId>com.google.cloud.sql</groupId>
+			<artifactId>postgres-socket-factory</artifactId>
+			<version>LATEST</version>
+		</dependency>
+
 		<!-- Flyway para controle de versionamento do BD -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
