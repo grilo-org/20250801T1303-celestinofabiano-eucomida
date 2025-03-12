@@ -78,7 +78,7 @@ A segurança do sistema é baseada em **OAuth2 e JWT**:
 ### 🔹 Escalabilidade:
 
 - O sistema pode ser escalado horizontalmente ao adicionar novas instâncias da aplicação, permitindo distribuição de carga entre múltiplos servidores.
-- O sistema foi estruturado para permitir modularização no futuro.
+- O sistema foi estruturado para permitir evolução para microserviços no futuro.
 - Uso de **HikariCP** para otimização de conexões ao banco.
 
 ### 🔹 Segurança:
