@@ -90,27 +90,35 @@ A segurança do sistema é baseada em **OAuth2 e JWT**:
 
 ---
 
+## 📖 Documentação da API
+
+A documentação interativa da API pode ser acessada via **Swagger UI** no seguinte link:
+
+🔗 **[Swagger UI - Documentação da API](https://eucomida-k37rx7zl3q-uc.a.run.app/swagger-ui/index.html)**
+
+Caso a aplicação esteja rodando **local
+
 ## 🛠 Como Rodar o Projeto
 
 ### 🔹 Pré-requisitos:
 
-1. **Docker e Docker Compose** instalados.
+1. **Docker e Docker Compose** instalados (versões mais recentes).
 2. **Java 21 e Maven** instalados.
 
 ### 🔹 Passos para rodar:
 
 ```sh
 # Clonar o repositório
-git clone https://github.com/seu-repositorio/eucomida-backend.git
-cd eucomida-backend
+git clone https://github.com/seu-repositorio/eucomida.git
+cd eucomida
 
 # Construir o projeto
 mvn clean install
 
 # Subir os containers (PostgreSQL + API)
-docker-compose up -d
+docker compose up
 
-# A API estará rodando em http://localhost:8098
+# A API estará rodando em http://localhost:8080
 ```
 
 ### 🔹 Executar testes:
