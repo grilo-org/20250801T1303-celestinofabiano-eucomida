@@ -72,7 +72,7 @@ class GlobalExceptionHandlerTest {
     @Test
     void shouldHandleOrderNotFoundException() {
         when(request.getRequestURI()).thenReturn(TEST_PATH);
-        ResponseEntity<ErrorResponseDto> response = globalExceptionHandler.handleUserNotFoundException(
+        ResponseEntity<ErrorResponseDto> response = globalExceptionHandler.handleOrderNotFoundException(
                 new OrderNotFoundException(), request);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
