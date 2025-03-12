@@ -107,7 +107,7 @@ A documentação interativa da API pode ser acessada via **Swagger UI** no segui
 
 ```sh
 # Clonar o repositório
-git clone https://github.com/seu-repositorio/eucomida.git
+git clone https://github.com/celestinofabiano/eucomida.git
 cd eucomida
 
 # Construir o projeto
