@@ -1,6 +1,7 @@
 # euComida - Backend
 
 ## 📌 Visão Geral
+
 O `euComida` é um backend projetado para suportar um marketplace de delivery de comida. O sistema foi desenvolvido com foco em escalabilidade, segurança e boas práticas de desenvolvimento. Esta documentação detalha a arquitetura atual, tecnologias utilizadas e estratégias adotadas para autenticação e segurança.
 
 ---
@@ -8,6 +9,7 @@ O `euComida` é um backend projetado para suportar um marketplace de delivery de
 ## 🏗 Arquitetura do Projeto
 
 ### 🔹 Tecnologias e Frameworks Utilizados
+
 - **Linguagem**: Java 21
 - **Framework Principal**: Spring Boot 3.4.3
 - **Persistência**: Spring Data JPA + Hibernate
@@ -27,26 +29,31 @@ O `euComida` é um backend projetado para suportar um marketplace de delivery de
 O sistema utiliza um banco **relacional (PostgreSQL)** com um modelo normalizado para melhor integridade dos dados.
 
 ### 📊 Principais Tabelas:
+
 1. **Usuários (`users`)**
    - `id` (UUID) - Identificador único  
    - `name` (String) - Nome do usuário  
    - `email` (String) - E-mail (único)  
-   - `password` (String) - Hash da senha (para usuários sem OAuth2)  
-   - `created_at` (LocalDateTime) - Data de criação  
-   - `updated_at` (LocalDateTime) - Última atualização  
+   - `created_at` (TIMESTAMP) - Data de criação  
+   - `updated_at` (TIMESTAMP) - Última atualização  
 
 2. **Entregadores (`couriers`)**  
    - `id` (UUID) - Identificador único  
-   - `user_id` (UUID) - Relacionamento com a tabela `users`  
-   - `vehicle_type` (ENUM) - Tipo de veículo (`BIKE`, `CAR`, `MOTO`)  
+   - `user_id` (UUID) - Relacionamento com a tabela `users`, único e obrigatório  
+   - `vehicle_type` (VARCHAR) - Tipo de veículo (`BICYCLE`, `CAR`, `MOTORCYCLE`)  
+   - `plate_number` (VARCHAR) - Placa do veículo (opcional)  
+   - `created_at` (TIMESTAMP) - Data de criação  
+   - `updated_at` (TIMESTAMP) - Última atualização  
 
 3. **Pedidos (`orders`)**  
    - `id` (UUID) - Identificador único  
    - `user_id` (UUID) - Relacionamento com a tabela `users`  
    - `courier_id` (UUID) - Relacionamento com `couriers`  
-   - `status` (ENUM) - Status (`PENDING`, `IN_PROGRESS`, `DELIVERED`, `CANCELED`)  
-   - `payment_status` (ENUM) - Status do pagamento (`PENDING`, `PAID`, `FAILED`)  
-   - `created_at` (LocalDateTime) - Data de criação  
+   - `status` (VARCHAR) - Status (`PENDING`, `IN_PROGRESS`, `DELIVERED`, `CANCELED`)  
+   - `total_price` (DECIMAL) - Valor total do pedido  
+   - `payment_status` (VARCHAR) - Status do pagamento (`PENDING`, `PAID`, `FAILED`)  
+   - `created_at` (TIMESTAMP) - Data de criação  
+   - `updated_at` (TIMESTAMP) - Última atualização  
 
 O controle de versões do banco é gerenciado pelo **Flyway**.
 
@@ -55,34 +62,39 @@ O controle de versões do banco é gerenciado pelo **Flyway**.
 ## 🔑 Estratégia de Autenticação e Autorização
 
 A segurança do sistema é baseada em **OAuth2 e JWT**:
+
 - O backend delega a autenticação ao Google via OAuth2.
 - O sistema gera **tokens JWT** para sessões autenticadas.
-- O **Spring Security** gerencia permissões e acessos com base no tipo de usuário.
-- Tokens possuem **tempo de expiração** e necessitam de renovação periódica.
+- O **Spring Security** gerencia apenas a autenticação dos usuários, sem controle de autorização.
+- Tokens possuem **tempo de expiração de 1 hora** e necessitam de renovação periódica.
 
 ---
 
 ## 🚀 Estratégia de Escalabilidade e Segurança da API
 
 ### 🔹 Escalabilidade:
-- Estruturado para suportar **múltiplas instâncias** (horizontal scaling futuro).
+
+- O sistema pode ser escalado horizontalmente ao adicionar novas instâncias da aplicação, permitindo distribuição de carga entre múltiplos servidores.
 - Uso de **HikariCP** para otimização de conexões ao banco.
 
 ### 🔹 Segurança:
+
 - **Autenticação via OAuth2 e JWT** para evitar acessos não autorizados.
-- **Rate Limiting** via Spring Boot (proteção contra ataques DDoS).
-- **Criptografia de senhas** usando BCrypt.
-- **CORS configurado** para restringir acessos indesejados.
+- Não há implementação de **Rate Limiting** no projeto até o momento.
+- O sistema utiliza **OAuth2 com Google**, e senhas não são armazenadas no banco para usuários autenticados via Google.
+- **CORS configurado corretamente**, permitindo acessos controlados a partir de origens específicas.
 
 ---
 
 ## 🛠 Como Rodar o Projeto
 
 ### 🔹 Pré-requisitos:
+
 1. **Docker e Docker Compose** instalados.
 2. **Java 21 e Maven** instalados.
 
 ### 🔹 Passos para rodar:
+
 ```sh
 # Clonar o repositório
 git clone https://github.com/seu-repositorio/eucomida-backend.git
