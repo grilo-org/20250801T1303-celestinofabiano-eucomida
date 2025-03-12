@@ -13,7 +13,7 @@ O `euComida` é um backend projetado para suportar um marketplace de delivery de
 - **Linguagem**: Java 21
 - **Framework Principal**: Spring Boot 3.4.3
 - **Persistência**: Spring Data JPA + Hibernate
-- **Banco de Dados**: PostgreSQL
+- **Banco de Dados**: PostgreSQL 16
 - **Autenticação e Segurança**: OAuth2 (Google), JWT, Spring Security
 - **Testes**: JUnit 5, AssertJ, Mockito
 - **Documentação da API**: OpenAPI (Swagger)
@@ -30,32 +30,35 @@ O sistema utiliza um banco **relacional (PostgreSQL)** com um modelo normalizado
 
 ### 📊 Principais Tabelas:
 
-1. **Usuários (`users`)**
-   - `id` (UUID) - Identificador único  
-   - `name` (String) - Nome do usuário  
-   - `email` (String) - E-mail (único)  
-   - `created_at` (TIMESTAMP) - Data de criação  
-   - `updated_at` (TIMESTAMP) - Última atualização  
+1. **Usuários (********`users`********\*\*\*\*)**
 
-2. **Entregadores (`couriers`)**  
-   - `id` (UUID) - Identificador único  
-   - `user_id` (UUID) - Relacionamento com a tabela `users`, único e obrigatório  
-   - `vehicle_type` (VARCHAR) - Tipo de veículo (`BICYCLE`, `CAR`, `MOTORCYCLE`)  
-   - `plate_number` (VARCHAR) - Placa do veículo (opcional)  
-   - `created_at` (TIMESTAMP) - Data de criação  
-   - `updated_at` (TIMESTAMP) - Última atualização  
+   - `id` (UUID) - Identificador único
+   - `name` (String) - Nome do usuário
+   - `email` (String) - E-mail (único)
+   - `created_at` (TIMESTAMP) - Data de criação
+   - `updated_at` (TIMESTAMP) - Última atualização
 
-3. **Pedidos (`orders`)**  
-   - `id` (UUID) - Identificador único  
-   - `user_id` (UUID) - Relacionamento com a tabela `users`  
-   - `courier_id` (UUID) - Relacionamento com `couriers`  
-   - `status` (VARCHAR) - Status (`PENDING`, `IN_PROGRESS`, `DELIVERED`, `CANCELED`)  
-   - `total_price` (DECIMAL) - Valor total do pedido  
-   - `payment_status` (VARCHAR) - Status do pagamento (`PENDING`, `PAID`, `FAILED`)  
-   - `created_at` (TIMESTAMP) - Data de criação  
-   - `updated_at` (TIMESTAMP) - Última atualização  
+2. **Entregadores (********`couriers`********\*\*\*\*)**
 
-O controle de versões do banco é gerenciado pelo **Flyway**.
+   - `id` (UUID) - Identificador único
+   - `user_id` (UUID) - Relacionamento com a tabela `users`, único e obrigatório
+   - `vehicle_type` (VARCHAR) - Tipo de veículo (`BICYCLE`, `CAR`, `MOTORCYCLE`)
+   - `plate_number` (VARCHAR) - Placa do veículo (opcional)
+   - `created_at` (TIMESTAMP) - Data de criação
+   - `updated_at` (TIMESTAMP) - Última atualização
+
+3. **Pedidos (********`orders`********\*\*\*\*)**
+
+   - `id` (UUID) - Identificador único
+   - `user_id` (UUID) - Relacionamento com a tabela `users`
+   - `courier_id` (UUID) - Relacionamento com `couriers`
+   - `status` (VARCHAR) - Status (`PENDING`, `IN_PROGRESS`, `DELIVERED`, `CANCELED`)
+   - `total_price` (DECIMAL) - Valor total do pedido
+   - `payment_status` (VARCHAR) - Status do pagamento (`PENDING`, `PAID`, `FAILED`)
+   - `created_at` (TIMESTAMP) - Data de criação
+   - `updated_at` (TIMESTAMP) - Última atualização
+
+O controle de versões do banco de dados é gerenciado pelo **Flyway**.
 
 ---
 
@@ -65,8 +68,8 @@ A segurança do sistema é baseada em **OAuth2 e JWT**:
 
 - O backend delega a autenticação ao Google via OAuth2.
 - O sistema gera **tokens JWT** para sessões autenticadas.
-- O **Spring Security** gerencia apenas a autenticação dos usuários, sem controle de autorização.
-- Os Tokens possuem **tempo de expiração de 1 hora**.
+- O **Spring Security** gerencia  a autenticação dos usuários.
+- Os tokens possuem tempo de expiração de 1 hora.
 
 ---
 
@@ -79,10 +82,10 @@ A segurança do sistema é baseada em **OAuth2 e JWT**:
 
 ### 🔹 Segurança:
 
-- **Autenticação via OAuth2 e JWT** para evitar acessos não autorizados.
-- Não há implementação de **Rate Limiting** no projeto até o momento.
-- O sistema utiliza **OAuth2 com Google**, e senhas não são armazenadas no banco para usuários autenticados via Google.
-- **CORS configurado corretamente**, permitindo acessos controlados a partir de origens específicas.
+- **Spring Security** implementado para garantir a segurança da API, fornecendo autenticação e proteção contra acessos não autorizados.
+- **Gerenciamento seguro de credenciais**: As variáveis sensíveis (secrets) são armazenadas de forma segura no ambiente de execução, protegendo informações sensíveis.
+- **Autenticação via OAuth2 e JWT** para garantir sessões seguras e evitar acessos não autorizados.
+- O sistema utiliza **OAuth2 com Google**, e senhas não são armazenadas no banco de dados para usuários autenticados.
 
 ---
 
@@ -110,6 +113,7 @@ docker-compose up -d
 ```
 
 ### 🔹 Executar testes:
+
 ```sh
 mvn test
 ```
