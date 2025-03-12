@@ -1,10 +1,18 @@
 package com.geosapiens.eucomida.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.geosapiens.eucomida.dto.OrderRequestDto;
 import com.geosapiens.eucomida.dto.OrderResponseDto;
 import com.geosapiens.eucomida.entity.enums.OrderStatus;
 import com.geosapiens.eucomida.exception.OrderNotFoundException;
 import com.geosapiens.eucomida.service.OrderService;
+import java.net.URI;
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,13 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import java.net.URI;
-import java.util.List;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class OrderControllerTest {
 

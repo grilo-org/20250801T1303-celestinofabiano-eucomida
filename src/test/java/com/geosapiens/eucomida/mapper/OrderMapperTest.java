@@ -9,13 +9,12 @@ import com.geosapiens.eucomida.entity.Order;
 import com.geosapiens.eucomida.entity.User;
 import com.geosapiens.eucomida.entity.enums.OrderStatus;
 import com.geosapiens.eucomida.entity.enums.PaymentStatus;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.validation.annotation.Validated;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.validation.annotation.Validated;
 
 @Validated
 class OrderMapperTest {

@@ -1,9 +1,10 @@
 package com.geosapiens.eucomida.constant;
 
-import org.junit.jupiter.api.Test;
-import java.lang.reflect.Constructor;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import static org.assertj.core.api.Assertions.*;
+import java.lang.reflect.Constructor;
+import org.junit.jupiter.api.Test;
 
 class ValidationConstantsTest {
 

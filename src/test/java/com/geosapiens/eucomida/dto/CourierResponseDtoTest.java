@@ -1,11 +1,10 @@
 package com.geosapiens.eucomida.dto;
 
-import com.geosapiens.eucomida.entity.enums.VehicleType;
-import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import com.geosapiens.eucomida.entity.enums.VehicleType;
+import java.util.UUID;
+import org.junit.jupiter.api.Test;
 
 class CourierResponseDtoTest {
 

@@ -49,13 +49,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return AuthenticationUtils.getToken();
     }
 
-    private Optional<UserResponseDto> processAuthenticatedUser(Authentication authentication) {
+    @Override
+    public Optional<UserResponseDto> processAuthenticatedUser(Authentication authentication) {
         String name = AuthenticationUtils.getClaim(CLAIM_NAME).orElse(null);
         String email = AuthenticationUtils.getClaim(CLAIM_EMAIL).orElse(null);
         return createOrGetUser(name, email);
     }
 
-    private Optional<UserResponseDto> createOrGetUser(String name, String email) {
+    @Override
+    public Optional<UserResponseDto> createOrGetUser(String name, String email) {
         if (email == null || email.isBlank()) {
             return Optional.empty();
         }

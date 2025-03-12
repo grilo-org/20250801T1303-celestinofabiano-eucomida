@@ -1,22 +1,19 @@
 package com.geosapiens.eucomida.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.geosapiens.eucomida.dto.UserRequestDto;
 import com.geosapiens.eucomida.dto.UserResponseDto;
 import com.geosapiens.eucomida.entity.User;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.validation.annotation.Validated;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.validation.annotation.Validated;
 
 @Validated
 class UserMapperTest {

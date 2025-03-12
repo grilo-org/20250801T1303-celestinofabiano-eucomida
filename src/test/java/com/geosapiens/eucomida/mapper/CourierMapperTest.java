@@ -6,10 +6,9 @@ import com.geosapiens.eucomida.dto.CourierResponseDto;
 import com.geosapiens.eucomida.entity.Courier;
 import com.geosapiens.eucomida.entity.User;
 import com.geosapiens.eucomida.entity.enums.VehicleType;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 class CourierMapperTest {
 

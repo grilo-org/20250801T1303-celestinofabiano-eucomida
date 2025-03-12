@@ -1,5 +1,7 @@
 package com.geosapiens.eucomida.util;
 
+import static com.geosapiens.eucomida.constant.ErrorMessages.UTILITY_CLASS;
+
 import java.util.Optional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +16,7 @@ public class AuthenticationUtils {
     public static final String CLAIM_EMAIL = "email";
 
     private AuthenticationUtils() {
-        throw new IllegalStateException("Utility class");
+        throw new IllegalStateException(UTILITY_CLASS);
     }
 
     public static Optional<Authentication> getAuthentication() {
@@ -37,8 +39,10 @@ public class AuthenticationUtils {
         return getAuthentication().flatMap(authentication -> switch (authentication) {
             case JwtAuthenticationToken jwtAuth -> Optional.of(jwtAuth.getToken().getTokenValue());
             case OAuth2AuthenticationToken oauth when oauth.getPrincipal() instanceof OidcUser oidcUser ->
-                    Optional.of(oidcUser.getIdToken().getTokenValue());
+                    Optional.ofNullable(oidcUser.getIdToken())
+                            .flatMap(idToken -> Optional.ofNullable(idToken.getTokenValue()));
             default -> Optional.empty();
         });
     }
+
 }

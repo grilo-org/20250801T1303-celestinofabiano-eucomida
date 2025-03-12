@@ -1,16 +1,15 @@
 package com.geosapiens.eucomida.dto;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.geosapiens.eucomida.constant.ValidationConstants;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class UserRequestDtoTest {
 

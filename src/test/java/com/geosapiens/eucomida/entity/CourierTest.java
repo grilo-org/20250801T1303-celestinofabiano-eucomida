@@ -1,18 +1,17 @@
 package com.geosapiens.eucomida.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.geosapiens.eucomida.constant.ValidationConstants;
 import com.geosapiens.eucomida.entity.enums.VehicleType;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.Set;
 import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class CourierTest {
 

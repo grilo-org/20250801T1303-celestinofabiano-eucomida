@@ -1,8 +1,15 @@
 package com.geosapiens.eucomida.controller.advice;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.geosapiens.eucomida.constant.ErrorMessages;
 import com.geosapiens.eucomida.dto.ErrorResponseDto;
-import com.geosapiens.eucomida.exception.*;
+import com.geosapiens.eucomida.exception.AuthenticatedUserNotFoundException;
+import com.geosapiens.eucomida.exception.CourierNotFoundException;
+import com.geosapiens.eucomida.exception.OrderNotFoundException;
+import com.geosapiens.eucomida.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class GlobalExceptionHandlerTest {
 
