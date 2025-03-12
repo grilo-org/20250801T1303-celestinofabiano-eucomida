@@ -66,7 +66,7 @@ A segurança do sistema é baseada em **OAuth2 e JWT**:
 - O backend delega a autenticação ao Google via OAuth2.
 - O sistema gera **tokens JWT** para sessões autenticadas.
 - O **Spring Security** gerencia apenas a autenticação dos usuários, sem controle de autorização.
-- Tokens possuem **tempo de expiração de 1 hora** e necessitam de renovação periódica.
+- Os Tokens possuem **tempo de expiração de 1 hora**.
 
 ---
 
