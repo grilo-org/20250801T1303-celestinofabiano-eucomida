@@ -96,9 +96,7 @@ A documentação interativa da API pode ser acessada via **Swagger UI** no segui
 
 🔗 **[Swagger UI - Documentação da API](https://eucomida-k37rx7zl3q-uc.a.run.app/swagger-ui/index.html)**
 
-Caso a aplicação esteja rodando **local
-
-## 🛠 Como Rodar o Projeto
+## 🛠 Como Rodar o Projeto em ambiente LOCAL
 
 ### 🔹 Pré-requisitos:
 

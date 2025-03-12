@@ -72,15 +72,12 @@ O ambiente **euComida** inclui as seguintes variáveis:
 2. Escolha uma requisição dentro da coleção **euComida**.
 3. Certifique-se de que a autenticação foi realizada e que a variável `token` está preenchida.
 4. Clique em **Send** para testar os endpoints.
+   - 🚨 Status possíveis de pedidos: (`PENDING`, `IN_PROGRESS`, `DELIVERED`, `CANCELED`)
+   - 🚨 Status possíveis de pagamentos: (`PENDING`, `PAID`, `FAILED`)
 
----
+Para informações detalhadas sobre os endpoints disponíveis, acesse a documentação completa no Swagger:
 
-## 🚀 Testando os endpoints de Pedidos
-
-1. **Selecione** o ambiente **euComida** no canto superior direito do Postman.
-2. Escolha uma requisição dentro da coleção **euComida**.
-3. Certifique-se de que a autenticação foi realizada e que a variável `token` está preenchida.
-4. Clique em **Send** para testar os endpoints.
+📄 **[Documentação da API - Swagger](https://eucomida-k37rx7zl3q-uc.a.run.app/swagger-ui/index.html)**
 
 ---
 
