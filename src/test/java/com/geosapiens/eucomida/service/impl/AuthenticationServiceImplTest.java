@@ -11,7 +11,6 @@ import com.geosapiens.eucomida.dto.UserResponseDto;
 import com.geosapiens.eucomida.exception.AuthenticatedUserNotFoundException;
 import com.geosapiens.eucomida.exception.UserNotFoundException;
 import com.geosapiens.eucomida.service.UserService;
-import com.geosapiens.eucomida.util.AuthenticationUtils;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +31,7 @@ class AuthenticationServiceImplTest {
     @Mock
     private Authentication authentication;
 
-    private MockedStatic<AuthenticationUtils> authenticationUtilsMock;
+    private MockedStatic<AuthenticationServiceImpl> AuthenticationServiceImplMock;
 
     @InjectMocks
     private AuthenticationServiceImpl authenticationService;
@@ -42,23 +41,23 @@ class AuthenticationServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        authenticationUtilsMock = mockStatic(AuthenticationUtils.class);
+        AuthenticationServiceImplMock = mockStatic(AuthenticationServiceImpl.class);
     }
 
     @AfterEach
     void tearDown() {
-        authenticationUtilsMock.close();
+        AuthenticationServiceImplMock.close();
     }
 
     @Test
     void shouldFindCurrentUserDtoWhenAuthenticated() {
-        authenticationUtilsMock.when(AuthenticationUtils::getAuthentication)
+        AuthenticationServiceImplMock.when(AuthenticationServiceImpl::getAuthentication)
                 .thenReturn(Optional.of(authentication));
-        authenticationUtilsMock.when(
-                        () -> AuthenticationUtils.getClaim(AuthenticationUtils.CLAIM_EMAIL))
+        AuthenticationServiceImplMock.when(
+                        () -> AuthenticationServiceImpl.getClaim(AuthenticationServiceImpl.CLAIM_EMAIL))
                 .thenReturn(Optional.of(USER_EMAIL));
-        authenticationUtilsMock.when(
-                        () -> AuthenticationUtils.getClaim(AuthenticationUtils.CLAIM_NAME))
+        AuthenticationServiceImplMock.when(
+                        () -> AuthenticationServiceImpl.getClaim(AuthenticationServiceImpl.CLAIM_NAME))
                 .thenReturn(Optional.of(USER_NAME));
 
         when(userService.getOrCreate(any(UserRequestDto.class))).thenReturn(
@@ -73,8 +72,8 @@ class AuthenticationServiceImplTest {
 
     @Test
     void shouldThrowAuthenticatedUserNotFoundExceptionWhenNotAuthenticated() {
-        authenticationUtilsMock.when(
-                        () -> AuthenticationUtils.getClaim(AuthenticationUtils.CLAIM_EMAIL))
+        AuthenticationServiceImplMock.when(
+                        () -> AuthenticationServiceImpl.getClaim(AuthenticationServiceImpl.CLAIM_EMAIL))
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> authenticationService.findCurrentUser())
@@ -83,8 +82,8 @@ class AuthenticationServiceImplTest {
 
     @Test
     void shouldThrowUserNotFoundExceptionWhenUserDoesNotExist() {
-        authenticationUtilsMock.when(
-                        () -> AuthenticationUtils.getClaim(AuthenticationUtils.CLAIM_EMAIL))
+        AuthenticationServiceImplMock.when(
+                        () -> AuthenticationServiceImpl.getClaim(AuthenticationServiceImpl.CLAIM_EMAIL))
                 .thenReturn(Optional.of(USER_EMAIL));
         when(userService.findByEmail(USER_EMAIL)).thenReturn(Optional.empty());
 
@@ -94,8 +93,8 @@ class AuthenticationServiceImplTest {
 
     @Test
     void shouldReturnCurrentUserEmailIfPresent() {
-        authenticationUtilsMock.when(
-                        () -> AuthenticationUtils.getClaim(AuthenticationUtils.CLAIM_EMAIL))
+        AuthenticationServiceImplMock.when(
+                        () -> AuthenticationServiceImpl.getClaim(AuthenticationServiceImpl.CLAIM_EMAIL))
                 .thenReturn(Optional.of(USER_EMAIL));
 
         Optional<String> email = authenticationService.getCurrentUserEmail();
@@ -106,7 +105,7 @@ class AuthenticationServiceImplTest {
     @Test
     void shouldReturnCurrentTokenIfPresent() {
         String token = "token";
-        authenticationUtilsMock.when(AuthenticationUtils::getToken)
+        AuthenticationServiceImplMock.when(AuthenticationServiceImpl::getToken)
                 .thenReturn(Optional.of(token));
 
         Optional<String> tokenOpt = authenticationService.getCurrentToken();

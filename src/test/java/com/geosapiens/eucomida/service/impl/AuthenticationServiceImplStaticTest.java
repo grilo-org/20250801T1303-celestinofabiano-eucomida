@@ -1,4 +1,4 @@
-package com.geosapiens.eucomida.util;
+package com.geosapiens.eucomida.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -6,8 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
-import com.geosapiens.eucomida.constant.ErrorMessages;
-import java.lang.reflect.Constructor;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,22 +22,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @ExtendWith(MockitoExtension.class)
-class AuthenticationUtilsTest {
-
-    @Test
-    void shouldThrowIllegalStateExceptionWhenConstructorIsInvoked() throws Exception {
-        Constructor<AuthenticationUtils> constructor = AuthenticationUtils.class.getDeclaredConstructor();
-        constructor.setAccessible(true);
-
-        assertThatThrownBy(constructor::newInstance)
-                .isInstanceOf(Exception.class)
-                .satisfies(exception -> {
-                    Throwable cause = exception.getCause();
-                    assertThat(cause)
-                            .isInstanceOf(IllegalStateException.class)
-                            .hasMessage(ErrorMessages.UTILITY_CLASS);
-                });
-    }
+class AuthenticationServiceImplStaticTest {
 
     @Test
     void shouldGetAuthenticationWhenPresent() {
@@ -50,7 +33,7 @@ class AuthenticationUtilsTest {
         try (MockedStatic<SecurityContextHolder> contextHolder = mockStatic(
                 SecurityContextHolder.class)) {
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            Optional<Authentication> result = AuthenticationUtils.getAuthentication();
+            Optional<Authentication> result = AuthenticationServiceImpl.getAuthentication();
             assertThat(result).isPresent().contains(authentication);
         }
     }
@@ -63,7 +46,7 @@ class AuthenticationUtilsTest {
         try (MockedStatic<SecurityContextHolder> contextHolder = mockStatic(
                 SecurityContextHolder.class)) {
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            Optional<Authentication> result = AuthenticationUtils.getAuthentication();
+            Optional<Authentication> result = AuthenticationServiceImpl.getAuthentication();
             assertThat(result).isEmpty();
         }
     }
@@ -81,9 +64,9 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getClaim(AuthenticationUtils.CLAIM_EMAIL)).contains(
+            assertThat(AuthenticationServiceImpl.getClaim(AuthenticationServiceImpl.CLAIM_EMAIL)).contains(
                     "test@example.com");
-            assertThat(AuthenticationUtils.getClaim(AuthenticationUtils.CLAIM_NAME)).contains(
+            assertThat(AuthenticationServiceImpl.getClaim(AuthenticationServiceImpl.CLAIM_NAME)).contains(
                     "Test User");
         }
     }
@@ -100,7 +83,7 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getClaim("custom_claim")).contains("custom_value");
+            assertThat(AuthenticationServiceImpl.getClaim("custom_claim")).contains("custom_value");
         }
     }
 
@@ -114,7 +97,7 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getClaim("any_claim")).isEmpty();
+            assertThat(AuthenticationServiceImpl.getClaim("any_claim")).isEmpty();
         }
     }
 
@@ -130,7 +113,7 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getToken()).contains("jwt-token");
+            assertThat(AuthenticationServiceImpl.getToken()).contains("jwt-token");
         }
     }
 
@@ -147,7 +130,7 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getToken()).contains("oidc-token");
+            assertThat(AuthenticationServiceImpl.getToken()).contains("oidc-token");
         }
     }
 
@@ -160,7 +143,7 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getToken()).isEmpty();
+            assertThat(AuthenticationServiceImpl.getToken()).isEmpty();
         }
     }
 
@@ -176,7 +159,7 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getToken()).isEmpty();
+            assertThat(AuthenticationServiceImpl.getToken()).isEmpty();
         }
     }
 
@@ -194,7 +177,7 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getToken()).isEmpty();
+            assertThat(AuthenticationServiceImpl.getToken()).isEmpty();
         }
     }
 
@@ -209,7 +192,7 @@ class AuthenticationUtilsTest {
             SecurityContext securityContext = mock(SecurityContext.class);
             when(securityContext.getAuthentication()).thenReturn(authentication);
             contextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext);
-            assertThat(AuthenticationUtils.getToken()).isEmpty();
+            assertThat(AuthenticationServiceImpl.getToken()).isEmpty();
         }
     }
 }
