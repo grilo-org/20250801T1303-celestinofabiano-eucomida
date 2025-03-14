@@ -8,6 +8,67 @@ O `euComida` é um backend projetado para suportar um marketplace de delivery de
 
 ## 🏗 Arquitetura do Projeto
 
+O backend do projeto **euComida** está estruturado seguindo a **arquitetura multicamadas** (N-Tier Architecture), organizando o código de forma modular e separando responsabilidades entre as diferentes camadas. Isso permite um desenvolvimento mais organizado, facilitando a manutenção e escalabilidade da aplicação.
+
+### 🔹 Estrutura de Diretórios
+
+O código está estruturado no diretório `src/main/java/com/geosapiens/eucomida` com as seguintes pastas principais:
+
+1. **Camada de Apresentação (`controller`)**
+
+   - **Local:** `src/main/java/com/geosapiens/eucomida/controller`
+   - Responsável pelos controladores REST que expõem as APIs da aplicação.
+   - **Exemplo:** `OrderController.java` lida com requisições HTTP relacionadas a pedidos.
+   - Utiliza anotações como `@RestController`, `@RequestMapping`, `@GetMapping`, `@PostMapping`, etc.
+
+2. **Camada de Serviço (`service`)**
+
+   - **Local:** `src/main/java/com/geosapiens/eucomida/service`
+   - Contém a lógica de negócio da aplicação.
+   - **Exemplo:** `OrderService.java` contém a lógica para criar e buscar pedidos.
+   - Utiliza `@Service` para ser gerenciado pelo Spring.
+
+3. **Camada de Persistência (`repository`)**
+
+   - **Local:** `src/main/java/com/geosapiens/eucomida/repository`
+   - Contém os repositórios JPA responsáveis pela interação com o banco de dados.
+   - **Exemplo:** `OrderRepository.java`, que estende `JpaRepository<Order, UUID>`.
+   - Utiliza `@Repository` e métodos do Spring Data JPA.
+
+4. **Camada de Modelo de Dados (`entity`)**
+
+   - **Local:** `src/main/java/com/geosapiens/eucomida/entity`
+   - Contém as classes que representam as entidades do banco de dados.
+   - **Exemplo:** `Order.java`, `User.java`, `Courier.java`.
+   - Utiliza `@Entity`, `@Id`, `@GeneratedValue`, `@ManyToOne`, etc.
+
+5. **Camada de Transferência de Dados (`dto`)**
+
+   - **Local:** `src/main/java/com/geosapiens/eucomida/dto`
+   - Os DTOs (Data Transfer Objects) são usados para transferir dados entre a API e a lógica de negócio.
+   - **Exemplo:** `OrderDTO.java`, `UserDTO.java`.
+   - Utilizados nos controllers para entrada/saída de dados.
+
+6. **Camada de Mapeamento (`mapper`)**
+
+   - **Local:** `src/main/java/com/geosapiens/eucomida/mapper`
+   - Os mappers convertem entidades para DTOs e vice-versa.
+   - **Exemplo:** `OrderMapper.java` converte `Order` para `OrderDTO`.
+
+7. **Camada de Segurança (`security`)**
+
+   - **Local:** `src/main/java/com/geosapiens/eucomida/security`
+   - Contém a configuração de autenticação e autorização da aplicação.
+   - **Exemplo:** Implementação de JWT, filtros de segurança.
+
+8. **Camada de Exceções (`exception`)**
+
+   - **Local:** `src/main/java/com/geosapiens/eucomida/exception`
+   - Responsável pelo tratamento de erros e exceções personalizadas.
+   - **Exemplo:** `GlobalExceptionHandler.java` trata exceções essas exceções customizadas e retorna objetos padronizados em requisições RESTFUL.
+
+---
+
 ### 🔹 Tecnologias e Frameworks Utilizados
 
 - **Linguagem**: Java 21
