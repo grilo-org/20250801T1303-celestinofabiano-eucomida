@@ -7,8 +7,8 @@ WORKDIR /app
 # Copia o arquivo JAR para dentro do contêiner
 COPY target/eucomida-*.jar app.jar
 
-# Expõe a porta 8098
-EXPOSE 8098
+# Expõe a porta 8080
+EXPOSE 8080
 
 # Comando para rodar a aplicação dentro do contêiner
 CMD ["java", "-jar", "app.jar"]

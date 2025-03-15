@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 class GlobalExceptionHandlerTest {
@@ -130,6 +131,23 @@ class GlobalExceptionHandlerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getMessage()).isEqualTo(ErrorMessages.VALIDATION_ERROR);
+    }
+
+    @Test
+    void shouldHandleMethodArgumentTypeMismatchException() {
+        String errorMessage = "Failed to convert value of type 'String' to required type 'Integer'";
+
+        when(request.getRequestURI()).thenReturn(TEST_PATH);
+
+        MethodArgumentTypeMismatchException exception = mock(MethodArgumentTypeMismatchException.class);
+        when(exception.getMessage()).thenReturn(errorMessage);
+
+        ResponseEntity<ErrorResponseDto> response = globalExceptionHandler.handleMethodArgumentTypeMismatchException(
+                exception, request);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getMessage()).isEqualTo(errorMessage);
     }
 
     @Test

@@ -175,7 +175,7 @@ cd eucomida
 mvn clean install
 
 # Subir os containers (PostgreSQL + API)
-docker compose up
+docker-compose up --build
 
 # A API estará rodando em http://localhost:8080
 ```
